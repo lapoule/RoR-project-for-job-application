@@ -1,5 +1,11 @@
 <h1>List of all shops in database:</h1>
 
+<h2>Your location:</h2>
+<p>
+	Your city: <%= request.location.city %>, <%= request.location.country %></br>
+	Latitude: <%= request.location.latitude %>, Longitude: <%= request.location.longitude %>
+</p>
+
 <table>
 	<tr>
 		<th>Chain</th>
