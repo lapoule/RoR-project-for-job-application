@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  chain: 
+  name: 
+  latitude: 
+  longitude: 
+  address: 
+  city: 
+  zip: 
+  phone: 
+  country_code: MyString
+
+two:
+  chain: 
+  name: 
+  latitude: 
+  longitude: 
+  address: 
+  city: 
+  zip: 
+  phone: 
+  country_code: MyString
