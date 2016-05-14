@@ -1,0 +1,28 @@
+<h1>List of all shops in database:</h1>
+
+<table>
+	<tr>
+		<th>Chain</th>
+		<th>Name</th>
+		<th>Latitude</th>
+		<th>Longitude</th>
+		<th>Address</th>
+		<th>City</th>
+		<th>Zip</th>
+		<th>Phone</th>
+		<th>Country code</th>
+	</tr>
+	<% @shops.each do |shop| %>
+		<tr>
+			<td><%= shop.chain %></td>
+			<td><%= shop.name %></td>
+			<td><%= shop.latitude %></td>
+			<td><%= shop.longitude %></td>
+			<td><%= shop.address %></td>
+			<td><%= shop.city %></td>
+			<td><%= shop.zip %></td>
+			<td><%= shop.phone %></td>
+			<td><%= shop.country_code %></td>
+		</tr>
+	<% end %>
+</table>
