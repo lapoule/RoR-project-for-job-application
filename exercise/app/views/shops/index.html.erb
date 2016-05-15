@@ -1,14 +1,6 @@
 <h1>List of all shops in database:</h1>
 
-<h2>Your location:</h2>
-<p>
-	Your city: <%= request.safe_location.try(:city) %>, <%= request.safe_location.try(:country) %></br>
-	Latitude: <%= request.location.try(:latitude) %>, Longitude: <%= request.location.try(:longitude) %>
-	Adresse : <%= request.remote_ip %>
-	<%= request %>
-</p>
-
-<table>
+<table border = "1">
 	<tr>
 		<th>Chain</th>
 		<th>Name</th>
@@ -34,3 +26,12 @@
 		</tr>
 	<% end %>
 </table>
+
+<h2>Your location:</h2>
+<p>
+	Your city: <%= @loc.data["city"] %>, <%= @loc.data["country_name"] %></br>
+	Latitude: <%= @loc.data["latitude"] %>, Longitude: <%= @loc.data["longitude"] %></br>
+	Adresse IP : <%= @loc.data["ip"] %>
+</p>
+
+

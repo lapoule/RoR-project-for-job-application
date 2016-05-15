@@ -1,6 +1,16 @@
 class ShopsController < ApplicationController
+
 	def index
 		@shops = Shop.all
+
+		#Look for the user location
+		if Rails.env.development? || Rails.env.test?
+			#To test location data on localhost, let's take a constant IP
+			@loc = Geocoder.search("89.170.91.235").first
+		else
+			#Of course we won't do that in production
+			@loc = Geocoder.search(request.remote_ip).first
+		end
 	end
 
 	def show
