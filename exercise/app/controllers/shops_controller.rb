@@ -1,20 +1,48 @@
 class ShopsController < ApplicationController
 
 	def index
-		@shops = Shop.all
-
-		#Look for the user location
-		if Rails.env.development? || Rails.env.test?
-			#To test location data on localhost, let's take a constant IP
-			@loc = Geocoder.search("89.170.91.235").first
+		
+		#Default : display all shops
+		if not (params[:neighbourhood] || params[:near])
+			@display = "all"
+			@shops = Shop.all.order(zip: :asc)
 		else
-			#Of course we won't do that in production
-			@loc = Geocoder.search(request.remote_ip).first
-		end
+			#Display user's neighbourhood (20 km)
+			if params[:neighbourhood]
+				@display = "neighbourhood"
+				#Display all shops in the user's neighbourhood
+				#Look for the user location
+				if Rails.env.development? || Rails.env.test?
+					#To test location data on localhost, let's take a constant IP
+					@loc = Geocoder.search("89.170.91.235").first
+				else
+					#Of course we won't do that in production
+					@loc = Geocoder.search(request.remote_ip).first
+				end
+				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 20, :units => :km)
+				#Sometimes it doesn't work perfectly since it returns shops more than [distance] kilometers away. For short distances it's OK.
+			else
+
+				#Display 10 nearest shops
+				#Shows the 10 nearest shops considering user's location
+				#Look for the user location
+				@display = "near"
+				if Rails.env.development? || Rails.env.test?
+					#To test location data on localhost, let's take a constant IP
+					@loc = Geocoder.search("89.170.91.235").first
+				else
+					#Of course we won't do that in production
+					@loc = Geocoder.search(request.remote_ip).first
+				end	
+				#I assume this is not proper code but... didn't find how to do it better !
+				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 999999).limit(10)
+			end
+		end	
 	end
 
 	def show
-		@shop = Shop.find(params[:id])
+		#Display information on the selected shop
+		@shops = [Shop.find(params[:id])]
 	end
 
 	def new
@@ -52,11 +80,22 @@ class ShopsController < ApplicationController
 		redirect_to @shop#index
 	end
 
+	def show_nearest
+	#Shows the 10 nearest shops considering user's location
+		#Look for the user location
+		if Rails.env.development? || Rails.env.test?
+			#To test location data on localhost, let's take a constant IP
+			@loc = Geocoder.search("89.170.91.235").first
+		else
+			#Of course we won't do that in production
+			@loc = Geocoder.search(request.remote_ip).first
+		end	
+		@shops = Shop.all.order(distance: :asc).limit(10)
+	end
 
 	private
 	def shop_parameters
 	#Let's consider we need all data for a valid shop
 		params.require(:shop).permit(:chain, :name, :latitude, :longitude, :address, :city, :zip, :phone, :country_code)
 	end
-
 end

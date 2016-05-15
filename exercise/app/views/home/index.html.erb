@@ -1,3 +1,8 @@
 <h1>Shopmium project homepage</h1>
-<%= link_to 'Shop list', controller: 'shops' %>
-<%= link_to 'Add a shop', new_shop_path %>
+<p>
+	Menu:</br>
+	<%= link_to 'Display shops list', shops_path %></br>
+	<%= link_to 'Add a new shop', new_shop_path %></br>
+	<%= link_to 'Display neighbourhood shops', shops_path(neighbourhood: true)%></br>
+	<%= link_to 'Display nearest shops', shops_path(near: true) %>
+</p>

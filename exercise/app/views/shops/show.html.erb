@@ -1,4 +1,8 @@
-<h1>List of all shops in database:</h1>
+<% if not(defined?(@shops.first.distance)) %>
+	<h1>Information on shop n°<%= @shops.first.id %>:</h1>
+<% else %>
+	<h1>Here are the nearest shops in your neighbourhood:</h1>
+<% end %>
 
 <table border = "1">
 	<tr>
@@ -11,7 +15,9 @@
 		<th>Zip</th>
 		<th>Phone</th>
 		<th>Country code</th>
-		<th colspan ="2">Options</th>
+		<% if defined?(@shops.first.distance) %>
+			<th>Distance</th>
+		<% end %>
 	</tr>
 	<% @shops.each do |shop| %>
 		<tr>
@@ -24,17 +30,23 @@
 			<td><%= shop.zip %></td>
 			<td><%= shop.phone %></td>
 			<td><%= shop.country_code %></td>
-			<td><%= link_to 'Edit shop', edit_shop_path(shop) %></td>
-			<td><%= button_to 'Delete shop', shop_path(shop), method: :delete %></td>
+			<% if defined?(@shops.first.distance) %>
+				<td><%= shop.distance %></td>
+			<% end %>
 		</tr>
 	<% end %>
 </table>
 
-<h2>Your location:</h2>
-<p>
-	Your city: <%= @loc.data["city"] %>, <%= @loc.data["country_name"] %></br>
-	Latitude: <%= @loc.data["latitude"] %>, Longitude: <%= @loc.data["longitude"] %></br>
-	Adresse IP : <%= @loc.data["ip"] %>
-</p>
-
+<% if defined?(@loc) %>
+	<h2>Your location:</h2>
+	<p>
+		Your city: <%= @loc.data["city"] %>, <%= @loc.data["country_name"] %></br>
+		Latitude: <%= @loc.data["latitude"] %>, Longitude: <%= @loc.data["longitude"] %></br>
+		Adresse IP : <%= @loc.data["ip"] %>
+	</p>
+<% else %>
+	<p>
+		<%= link_to 'Back to shops list', shops_path %>
+	</p>
+<% end %>
 

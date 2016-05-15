@@ -1,4 +1,23 @@
-<h1>List of all shops in database:</h1>
+<% if @display == "all" %>
+	<a id = "top_page"/>
+	<h1>List of all shops in database:</h1>
+	<p>
+		<%= link_to 'Add a new shop', new_shop_path %></br>
+		<%= link_to 'Back to home', home_index_path %>
+	</p>
+<% else %>
+	<% if @display == "near" %>
+		<h1>Here are the 10 nearest shops:</h1>
+		<p>
+			<%= link_to 'Display neighbourhood shops', shops_path(neighbourhood: true) %>
+		</p>
+	<% else %>
+		<h1>You can find all the following shops in your neighbourhood:</h1>
+		<p>
+			<%= link_to 'Display 10 nearest shops', shops_path(near: true) %>
+		</p>
+	<% end %>
+<% end %>
 
 <table border = "1">
 	<tr>
@@ -11,7 +30,11 @@
 		<th>Zip</th>
 		<th>Phone</th>
 		<th>Country code</th>
-		<th colspan ="2">Options</th>
+		<% if @display == "all" %>
+			<th colspan ="2">Options</th>
+		<% else %>
+			<th>Distance</th>
+		<% end %>
 	</tr>
 	<% @shops.each do |shop| %>
 		<tr>
@@ -24,17 +47,22 @@
 			<td><%= shop.zip %></td>
 			<td><%= shop.phone %></td>
 			<td><%= shop.country_code %></td>
-			<td><%= button_to 'Edit shop', edit_shop_path(shop) %></td>
-			<td><%= button_to 'Delete shop', shop_path(shop), method: :delete %></td>
+			<% if @display == "all" %>
+				<td><%= button_to 'Edit shop', edit_shop_path(shop), method: :get %></td>
+				<td><%= button_to 'Delete shop', shop_path(shop), method: :delete %></td>
+			<% else %>
+				<td><%= shop.distance.round(1) %>km</td>
+			<% end %>
 		</tr>
 	<% end %>
 </table>
 
-<h2>Your location:</h2>
-<p>
-	Your city: <%= @loc.data["city"] %>, <%= @loc.data["country_name"] %></br>
-	Latitude: <%= @loc.data["latitude"] %>, Longitude: <%= @loc.data["longitude"] %></br>
-	Adresse IP : <%= @loc.data["ip"] %>
-</p>
-
-
+<% if @display != "all" %>
+	<p>
+		<%= link_to 'Back to home', home_index_path %>
+	</p>
+<% else %>
+	<p>
+		<a href="#top_page">Go to top</a>
+	</p>
+<% end %>
