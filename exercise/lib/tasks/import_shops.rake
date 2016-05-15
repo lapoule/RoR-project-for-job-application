@@ -1,14 +1,7 @@
 desc "Imports all shops given in shops_shopmium.csv"
-task :import_shops do
+task import_shops: :environment do
 	require 'csv'
-	#Read the file from root directory
-	#double quotes temporarily substituted into single quotes
-	data_to_read = File.read("../shops_shopmium.csv").gsub('"', "'")
-	#Parse all data contained into CSV file
-	data = CSV.parse(data_to_read, :headers => true, :col_sep => '\t')
-	#For each row, print the data it contains
-	data.each do |row|
-		print row
-		STDOUT.flush
+	CSV.foreach("../shops_shopmium.csv", :headers => true) do |row|
+		Shop.create!(chain: row["chain"], name: row[" name"], latitude: row[" latitude"].to_f.round(6), longitude: row[" longitude"].to_f.round(6), address: row[" address"], city: row[" city"], zip: row[" zip"], phone: row[" phone"], country_code: row[" country_code"])
 	end
 end

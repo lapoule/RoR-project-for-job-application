@@ -1,12 +1,6 @@
 <h1>List of all shops in database:</h1>
 
-<h2>Your location:</h2>
-<p>
-	Your city: <%= request.location.city %>, <%= request.location.country %></br>
-	Latitude: <%= request.location.latitude %>, Longitude: <%= request.location.longitude %>
-</p>
-
-<table>
+<table border = "1">
 	<tr>
 		<th>Chain</th>
 		<th>Name</th>
@@ -17,6 +11,7 @@
 		<th>Zip</th>
 		<th>Phone</th>
 		<th>Country code</th>
+		<th colspan ="2">Options</th>
 	</tr>
 	<% @shops.each do |shop| %>
 		<tr>
@@ -29,6 +24,17 @@
 			<td><%= shop.zip %></td>
 			<td><%= shop.phone %></td>
 			<td><%= shop.country_code %></td>
+			<td><%= link_to 'Edit shop', edit_shop_path(shop) %></td>
+			<td><%= button_to 'Delete shop', shop_path(shop), method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<h2>Your location:</h2>
+<p>
+	Your city: <%= @loc.data["city"] %>, <%= @loc.data["country_name"] %></br>
+	Latitude: <%= @loc.data["latitude"] %>, Longitude: <%= @loc.data["longitude"] %></br>
+	Adresse IP : <%= @loc.data["ip"] %>
+</p>
+
+

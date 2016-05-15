@@ -11,6 +11,7 @@
 		<th>Zip</th>
 		<th>Phone</th>
 		<th>Country code</th>
+		<th colspan ="2">Options</th>
 	</tr>
 	<% @shops.each do |shop| %>
 		<tr>
@@ -23,6 +24,8 @@
 			<td><%= shop.zip %></td>
 			<td><%= shop.phone %></td>
 			<td><%= shop.country_code %></td>
+			<td><%= button_to 'Edit shop', edit_shop_path(shop) %></td>
+			<td><%= button_to 'Delete shop', shop_path(shop), method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
