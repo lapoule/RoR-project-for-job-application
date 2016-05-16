@@ -3,7 +3,7 @@ class ShopsController < ApplicationController
 	def index
 		
 		#Default : display all shops
-		if not (params[:neighbourhood] || params[:near])
+		if not (params[:neighbourhood] || params[:near] || params[:number])
 			@display = "all"
 			@shops = Shop.all.order(zip: :asc)
 		else
@@ -34,8 +34,12 @@ class ShopsController < ApplicationController
 					#Of course we won't do that in production
 					@loc = Geocoder.search(request.remote_ip).first
 				end	
+				
+				if not(@number = params[:number]) #if number parameter isn't found, set number to a default value
+					@number = 10
+				end
 				#I assume this is not proper code but... didn't find how to do it better !
-				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 999999).limit(10)
+				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 999999).limit(@number)
 			end
 		end	
 	end
