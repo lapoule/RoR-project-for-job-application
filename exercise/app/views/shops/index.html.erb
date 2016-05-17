@@ -6,11 +6,16 @@
 		<%= link_to 'Back to home', home_index_path %>
 	</p>
 <% else %>
+
 	<% if @display == "near" %>
 		<h1>Here are the <%= @number %> nearest shops:</h1>
 	<% else %>	
 		<h1>You can find all the following shops in your neighbourhood (<%= @length %>km):</h1>
 	<% end %>
+
+	<!-- Display Google map -->
+	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=400x300&zoom=10&markers=#{@loc.latitude}%2C#{@loc.longitude}" %>
+
 	<p>
 		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
 			<%= label_tag "What size is your neighbourhood ?" %>
