@@ -8,19 +8,23 @@
 <% else %>
 	<% if @display == "near" %>
 		<h1>Here are the <%= @number %> nearest shops:</h1>
-		<p>
-			<%= link_to 'Display neighbourhood shops', shops_path(neighbourhood: true) %>
-		</p>
-	<% else %>
-		<h1>You can find all the following shops in your neighbourhood:</h1>
-		<p>
-			<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
-				<%= label_tag "How many nearest shops do you want to display ?" %>
-				<%= number_field_tag(:number, in: 1..100, step: 1) %>
-				<%= submit_tag "Display !", name: nil %>
-			<% end %>
-		</p>
+	<% else %>	
+		<h1>You can find all the following shops in your neighbourhood (<%= @length %>km):</h1>
 	<% end %>
+	<p>
+		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
+			<%= label_tag "What size is your neighbourhood ?" %>
+			<%= number_field_tag(:length, in: 2..100, step: 2) %>
+			<%= submit_tag "Display !", name: nil %>
+		<% end %>
+	</p>
+	<p>
+		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
+			<%= label_tag "How many nearest shops do you want to display ?" %>
+			<%= number_field_tag(:number, in: 1..100, step: 1) %>
+			<%= submit_tag "Display !", name: nil %>
+		<% end %>
+	</p>
 <% end %>
 
 <table border = "1">

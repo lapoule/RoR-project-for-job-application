@@ -3,12 +3,12 @@ class ShopsController < ApplicationController
 	def index
 		
 		#Default : display all shops
-		if not (params[:neighbourhood] || params[:near] || params[:number])
+		if not (params[:length] || params[:number])
 			@display = "all"
 			@shops = Shop.all.order(zip: :asc)
 		else
-			#Display user's neighbourhood (20 km)
-			if params[:neighbourhood]
+			#Display user's neighbourhood
+			if params[:length]
 				@display = "neighbourhood"
 				#Display all shops in the user's neighbourhood
 				#Look for the user location
@@ -19,12 +19,12 @@ class ShopsController < ApplicationController
 					#Of course we won't do that in production
 					@loc = Geocoder.search(request.remote_ip).first
 				end
-				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 20, :units => :km)
-				#Sometimes it doesn't work perfectly since it returns shops more than [distance] kilometers away. For short distances it's OK.
+				@length = params[:length]
+				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], @length, :units => :km)
+				#Sometimes it doesn't work perfectly since it returns shops more than [distance] kilometers away.
 			else
 
-				#Display 10 nearest shops
-				#Shows the 10 nearest shops considering user's location
+				#Shows the nearest shops considering user's location
 				#Look for the user location
 				@display = "near"
 				if Rails.env.development? || Rails.env.test?
@@ -33,11 +33,9 @@ class ShopsController < ApplicationController
 				else
 					#Of course we won't do that in production
 					@loc = Geocoder.search(request.remote_ip).first
-				end	
-				
-				if not(@number = params[:number]) #if number parameter isn't found, set number to a default value
-					@number = 10
 				end
+				
+				@number = params[:number]
 				#I assume this is not proper code but... didn't find how to do it better !
 				@shops = Shop.near([@loc.data["latitude"], @loc.data["longitude"]], 999999).limit(@number)
 			end

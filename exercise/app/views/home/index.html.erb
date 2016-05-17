@@ -3,6 +3,6 @@
 	Menu:</br>
 	<%= link_to 'Display shops list', shops_path %></br>
 	<%= link_to 'Add a new shop', new_shop_path %></br>
-	<%= link_to 'Display neighbourhood shops', shops_path(neighbourhood: true)%></br>
-	<%= link_to 'Display nearest shops', shops_path(near: true) %>
+	<%= link_to 'Display neighbourhood shops', shops_path(length: 20)%></br>
+	<%= link_to 'Display nearest shops', shops_path(number: 10) %>
 </p>
