@@ -13,8 +13,9 @@
 		<h1>You can find all the following shops in your neighbourhood (<%= @length %>km):</h1>
 	<% end %>
 
-	<!-- Display Google map -->
-	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=400x300&zoom=10&markers=#{@loc.latitude}%2C#{@loc.longitude}" %>
+	<div style='width: 400px;'>
+		<div id="map" style='width: 800px; height: 400px;'></div>
+	</div>
 
 	<p>
 		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
@@ -78,4 +79,12 @@
 	<p>
 		<a href="#top_page">Go to top</a>
 	</p>
+<% end %>
+
+<!-- Javascript script to display the map -->
+<%= javascript_tag do %>
+	handler = Gmaps.build('Google');
+	handler.buildMap({provider: {disableDefaultUI: true},
+			internal: {id: 'map'}});
+	handler.map.centerOn({lat: <%= @loc.latitude %>, lng: <%= @loc.longitude %>});
 <% end %>
