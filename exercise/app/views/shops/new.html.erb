@@ -1,41 +1,97 @@
 <h1>Create a new shop</h1>
 
 <%= form_for :shop, url: shops_path do |f| %>
+
+
 	<p>
-		<%= f.label :chain %></br>
-		<%= f.text_field :chain %></br>
+		<%= f.label :chain %>
+		<%= f.text_field :chain %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Chain" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>
 	</p>
 	<p>
-		<%= f.label :name %></br>
-		<%= f.text_field :name %></br>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Name" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>
 	</p>
 	<p>
-		<%= f.label :latitude %></br>
-		<%= f.number_field(:latitude, in: -90..90, step: 10.0 ** -6) %></br>
+		<%= f.label :latitude %>
+		<%= f.number_field(:latitude, in: -90..90, step: 10.0 ** -6) %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Latitude" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>	
 	</p>
 	<p>
-		<%= f.label :longitude %></br>
-		<%= f.number_field(:longitude, in: -180..180, step: 10.0 ** -6) %></br>
+		<%= f.label :longitude %>
+		<%= f.number_field(:longitude, in: -180..180, step: 10.0 ** -6) %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Longitude" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>	
 	</p>
 	<p>
-		<%= f.label :address %></br>
-		<%= f.text_field :address %></br>
+		<%= f.label :address %>
+		<%= f.text_field :address %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Address" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>		
 	</p>
 	<p>
-		<%= f.label :city %></br>
-		<%= f.text_field :city %></br>
+		<%= f.label :city %>
+		<%= f.text_field :city %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "City" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>		
 	</p>
 	<p>
-		<%= f.label :zip %></br>
-		<%= f.number_field(:zip, in: 1000..99999, step: 1) %></br>
+		<%= f.label :zip %>
+		<%= f.number_field(:zip, in: 1000..99999, step: 1) %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Zip" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>			
 	</p>
 	<p>
-		<%= f.label :phone %></br>
-		<%= f.text_field :phone %></br>
+		<%= f.label :phone %>
+		<%= f.text_field :phone %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Phone" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>		
 	</p>
 	<p>
-		<%= f.label :country_code %></br>
-		<%= f.text_field :country_code %></br>
+		<%= f.label :country_code %>
+		<%= f.text_field :country_code %>
+		<% @shop.errors.full_messages.each do |msg| %>
+			<% if msg.include? "Country code" %>
+				Error: <%= msg %>! 
+				<% break %>
+			<% end %>
+		<% end %>		
 	</p>
 	<p>
 		<%= f.submit %>
