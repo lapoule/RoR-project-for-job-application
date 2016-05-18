@@ -1,0 +1,28 @@
+<% if @display == "all" %>
+
+	<!-- Displays all existant shops in database -->
+	<a id = "top_page"/>
+	<h1>List of all shops in database:</h1>
+	<p>
+		<%= link_to 'Add a new shop', new_shop_path %></br>
+		<%= link_to 'Back to home', home_index_path %>
+	</p>
+
+<% else %>
+	
+	<% if @display == "near" %>
+		<!-- Displays X nearest shops -->
+		<h1>Here are the <%= @number %> nearest shops:</h1>
+	<% else %>
+		<!-- Displays the neighbourhood -->
+		<h1>You can find all the following shops in your neighbourhood (<%= @length %>km):</h1>
+	<% end %>
+
+	<!-- Displaying Google Map -->
+	<div style='width: 400px;'>
+		<div id="map" style='width: 400px; height: 400px;'></div>
+	</div>
+
+	<!-- Provide filters to user -->
+	<%= render 'index_filters' %>
+<% end %>

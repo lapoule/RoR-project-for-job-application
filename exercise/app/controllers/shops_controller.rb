@@ -51,11 +51,14 @@ class ShopsController < ApplicationController
 	#Defined to keep information if the shop can't be saved
 	#(wrong or missing data)
 		@shop = Shop.new
+		#When the form initializes, there's non error
+		@error = []
 	end
 
 	def edit
 	#Same thing as new after updating
 		@shop = Shop.find(params[:id])
+		@error = []
 	end
 
 	def create
@@ -63,6 +66,15 @@ class ShopsController < ApplicationController
 		if @shop.save
 			redirect_to @shop#index
 		else
+			@attributes = [:chain, :name, :latitude, :longitude, :address, :city, :zip, :phone, :country_code]
+			@error = []
+			@attributes.reverse.each do |att|
+				if @shop.errors[att].first.nil?
+					@error.push("")
+				else
+					@error.push("Error: " + att.to_s + " " + @shop.errors[att].first + "!")
+				end
+			end
 			render 'new'
 		end
 	end
@@ -72,6 +84,15 @@ class ShopsController < ApplicationController
 		if @shop.update(shop_parameters)
 			redirect_to @shop
 		else
+			@attributes = [:chain, :name, :latitude, :longitude, :address, :city, :zip, :phone, :country_code]
+			@error = []
+			@attributes.reverse.each do |att|
+				if @shop.errors[att].first.nil?
+					@error.push("")
+				else
+					@error.push("Error: " + att.to_s + " " + @shop.errors[att].first + "!")
+				end
+			end
 			render 'edit'
 		end
 	end
@@ -87,4 +108,5 @@ class ShopsController < ApplicationController
 	#Let's consider we need all data for a valid shop
 		params.require(:shop).permit(:chain, :name, :latitude, :longitude, :address, :city, :zip, :phone, :country_code)
 	end
+
 end

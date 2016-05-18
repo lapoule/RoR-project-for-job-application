@@ -5,10 +5,10 @@
 	Just look at the menu below, it lists everything you can do.
 </p>
 
-<p>
+<nav>
 	Menu:</br>
 	<%= link_to 'Display shops list', shops_path %></br>
 	<%= link_to 'Add a new shop', new_shop_path %></br>
 	<%= link_to 'Display neighbourhood shops', shops_path(length: 20)%></br>
 	<%= link_to 'Display nearest shops', shops_path(number: 10) %>
-</p>
+</nav>

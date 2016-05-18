@@ -1,0 +1,14 @@
+<p>
+	<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
+		<%= label_tag "What size is your neighbourhood ?" %>
+		<%= number_field_tag 'length', 20, in: 2...100, step: 2 %>
+		<%= submit_tag "Display !", name: nil %>
+	<% end %>
+</p>
+<p>
+	<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
+		<%= label_tag "How many nearest shops do you want to display ?" %>
+		<%= number_field_tag 'number', 10, in: 1...100, step: 1 %>
+		<%= submit_tag "Display !", name: nil %>
+	<% end %>
+</p>
