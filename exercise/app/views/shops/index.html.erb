@@ -54,41 +54,41 @@
 
 
 <!-- Javascript script to display Google Map -->
+<!-- Since I need Ruby variables, don't know if I can put this code on a proper Javascript file... -->
 <% if @display != "all" %>
 	<%= javascript_tag do %>
-handler = Gmaps.build('Google');
-handler.buildMap(
-{
-	provider: {},
-	internal: {id: 'map'}
-},
-function()
-{
-	<% @shops.each do |shop| %>
-		markers = handler.addMarkers([
+		handler = Gmaps.build('Google');
+		handler.buildMap(
 		{
-			"lat": <%= shop.latitude %>,
-			"lng": <%= shop.longitude %>,
-			"infowindow": "<h1><%= shop.chain %></h1><p><b><%= shop.name %> [<%= shop.distance.round(1) %>km]</b></br>(<%= shop.latitude %>, <%= shop.longitude %>)</br><%= shop.address %></br><%= shop.zip %> <%= shop.city %></br>Phone: <%= shop.phone %>"
-		}]);
-		handler.bounds.extendWith(markers);
-	<% end %>
-	markers = handler.addMarkers([
-  	{
-		"lat": <%= @loc.latitude %>,
-		"lng": <%= @loc.longitude %>,
-		// Use another mark to distinct shops and current location
-		"picture": 
-		{
-			"url": "http://googlemaps.googlermania.com/img/google-marker-big.png",
-			"width": 61,
-			"height": 105,
+			provider: {},
+			internal: {id: 'map'}
 		},
-		"infowindow": "<h1>You're here !</h1><p><b><%= @loc.city %></b></br>(<%= @loc.latitude %>, <%= @loc.longitude %>)</p>"
-    	}]);
-	google.maps.event.addListener(markers, 'click', function(){alert("test")});
-	handler.bounds.extendWith(markers);
-	handler.fitMapToBounds();
-});
+		function()
+		{
+			<% @shops.each do |shop| %>
+				markers = handler.addMarkers([
+				{
+					"lat": <%= shop.latitude %>,
+					"lng": <%= shop.longitude %>,
+					"infowindow": "<h1><%= shop.chain %></h1><p><b><%= shop.name %> [<%= shop.distance.round(1) %>km]</b></br>(<%= shop.latitude %>, <%= shop.longitude %>)</br><%= shop.address %></br><%= shop.zip %> <%= shop.city %></br>Phone: <%= shop.phone %>"
+				}]);
+				handler.bounds.extendWith(markers);
+			<% end %>
+			markers = handler.addMarkers([
+		  	{
+				"lat": <%= @loc.latitude %>,
+				"lng": <%= @loc.longitude %>,
+				// Use another mark to distinct shops and current location
+				"picture": 
+				{
+					"url": "http://googlemaps.googlermania.com/img/google-marker-big.png",
+					"width": 61,
+					"height": 105,
+				},
+				"infowindow": "<h1>You're here !</h1><p><b><%= @loc.city %></b></br>(<%= @loc.latitude %>, <%= @loc.longitude %>)</p>"
+			}]);
+			handler.bounds.extendWith(markers);
+			handler.fitMapToBounds();
+		});
 	<% end %>		
 <% end %>

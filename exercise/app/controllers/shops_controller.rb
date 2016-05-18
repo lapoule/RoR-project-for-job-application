@@ -10,7 +10,6 @@ class ShopsController < ApplicationController
 			#Display user's neighbourhood
 			if params[:length]
 				@display = "neighbourhood"
-				#Display all shops in the user's neighbourhood
 				#Look for the user location
 				if Rails.env.development? || Rails.env.test?
 					#To test location data on localhost, let's take a constant IP
@@ -25,13 +24,10 @@ class ShopsController < ApplicationController
 			else
 
 				#Shows the nearest shops considering user's location
-				#Look for the user location
 				@display = "near"
 				if Rails.env.development? || Rails.env.test?
-					#To test location data on localhost, let's take a constant IP
 					@loc = Geocoder.search("89.170.91.235").first
 				else
-					#Of course we won't do that in production
 					@loc = Geocoder.search(request.remote_ip).first
 				end
 				
@@ -51,7 +47,7 @@ class ShopsController < ApplicationController
 	#Defined to keep information if the shop can't be saved
 	#(wrong or missing data)
 		@shop = Shop.new
-		#When the form initializes, there's non error
+		#When the form initializes, there's no error
 		@error = []
 	end
 
@@ -66,11 +62,12 @@ class ShopsController < ApplicationController
 		if @shop.save
 			redirect_to @shop#index
 		else
+			#Associate each field with its error
 			@attributes = [:chain, :name, :latitude, :longitude, :address, :city, :zip, :phone, :country_code]
 			@error = []
 			@attributes.reverse.each do |att|
 				if @shop.errors[att].first.nil?
-					@error.push("")
+					@error.push("") #Nothing to display, but we want to keep the order
 				else
 					@error.push("Error: " + att.to_s + " " + @shop.errors[att].first + "!")
 				end
