@@ -13,21 +13,21 @@
 		<h1>You can find all the following shops in your neighbourhood (<%= @length %>km):</h1>
 	<% end %>
 
-	<div style='width: 400px;'>
-		<div id="map" style='width: 800px; height: 400px;'></div>
+	<div style='width: 800px;'>
+		<div id="map" style='width: 800px; height: 800px;'></div>
 	</div>
 
 	<p>
 		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
 			<%= label_tag "What size is your neighbourhood ?" %>
-			<%= number_field_tag(:length, in: 2..100, step: 2) %>
+			<%= number_field_tag 'length', 20, in: 2...100, step: 2 %>
 			<%= submit_tag "Display !", name: nil %>
 		<% end %>
 	</p>
 	<p>
 		<%= form_tag shops_path, method: :get, enforce_utf8: false do %>
 			<%= label_tag "How many nearest shops do you want to display ?" %>
-			<%= number_field_tag(:number, in: 1..100, step: 1) %>
+			<%= number_field_tag 'number', 10, in: 1...100, step: 1 %>
 			<%= submit_tag "Display !", name: nil %>
 		<% end %>
 	</p>
@@ -84,7 +84,27 @@
 <!-- Javascript script to display the map -->
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
-	handler.buildMap({provider: {disableDefaultUI: true},
-			internal: {id: 'map'}});
-	handler.map.centerOn({lat: <%= @loc.latitude %>, lng: <%= @loc.longitude %>});
+	handler.buildMap(
+	{
+		provider: {},
+		internal: {id: 'map'}
+	},
+	function()
+	{
+  		<% @shops.each do |shop| %>
+			markers = handler.addMarkers([
+			{
+				"lat": <%= shop.latitude %>,
+				"lng": <%= shop.longitude %>
+			}]);
+			handler.bounds.extendWith(markers);
+		<% end %>
+  		markers = handler.addMarkers([
+  		{
+			"lat": <%= @loc.latitude %>,
+			"lng": <%= @loc.longitude %>
+    		}]);
+		handler.bounds.extendWith(markers);
+		handler.fitMapToBounds();
+	});
 <% end %>
