@@ -3,7 +3,7 @@
 <%= render 'index_header'  %>
 
 <!-- Displays data on all selected shops -->
-<table border = "1">
+<table>
 	<!-- Displays all labels -->
 	<tr>
 		<%= render 'standard_attributes_labels' %>
@@ -38,20 +38,13 @@
 	<% end %>
 </table>
 
-
-<!-- Set a back_home link under the table -->
 <!-- An anchor to top is given when all data is printed -->
+<p class = "centered-paragraph">
+	<a href="#top_page">Go to top</a>
+</p>
 
-<% if @display != "all" %>
-	<p>
-		<%= link_to 'Back to home', home_index_path %>
-	</p>
-<% else %>
-	<p>
-		<a href="#top_page">Go to top</a>
-	</p>
-<% end %>
-
+<!-- Display the footer -->
+<%= render 'footer' %>
 
 <!-- Javascript script to display Google Map -->
 <!-- Since I need Ruby variables, don't know if I can put this code on a proper Javascript file... -->
@@ -70,7 +63,7 @@
 				{
 					"lat": <%= shop.latitude %>,
 					"lng": <%= shop.longitude %>,
-					"infowindow": "<h1><%= shop.chain %></h1><p><b><%= shop.name %> [<%= shop.distance.round(1) %>km]</b></br>(<%= shop.latitude %>, <%= shop.longitude %>)</br><%= shop.address %></br><%= shop.zip %> <%= shop.city %></br>Phone: <%= shop.phone %>"
+					"infowindow": "<h2><%= shop.chain %></h2><p><b><%= shop.name %> [<%= shop.distance.round(1) %>km]</b></br>(<%= shop.latitude %>, <%= shop.longitude %>)</br><%= shop.address %></br><%= shop.zip %> <%= shop.city %></br>Phone: <%= shop.phone %>"
 				}]);
 				handler.bounds.extendWith(markers);
 			<% end %>
@@ -85,7 +78,7 @@
 					"width": 61,
 					"height": 105,
 				},
-				"infowindow": "<h1>You're here !</h1><p><b><%= @loc.city %></b></br>(<%= @loc.latitude %>, <%= @loc.longitude %>)</p>"
+				"infowindow": "<h2>You're here !</h2><p><b><%= @loc.city %></b></br>(<%= @loc.latitude %>, <%= @loc.longitude %>)</p>"
 			}]);
 			handler.bounds.extendWith(markers);
 			handler.fitMapToBounds();

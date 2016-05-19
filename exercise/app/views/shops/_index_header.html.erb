@@ -1,12 +1,9 @@
-<% if @display == "all" %>
+<a id = "top_page"/>
 
+<% if @display == "all" %>
+	
 	<!-- Displays all existant shops in database -->
-	<a id = "top_page"/>
 	<h1>List of all shops in database:</h1>
-	<p>
-		<%= link_to 'Add a new shop', new_shop_path %></br>
-		<%= link_to 'Back to home', home_index_path %>
-	</p>
 
 <% else %>
 	
@@ -19,8 +16,8 @@
 	<% end %>
 
 	<!-- Displaying Google Map -->
-	<div style='width: 400px;'>
-		<div id="map" style='width: 400px; height: 400px;'></div>
+	<div id = "map_container">
+		<div id = "map"></div>
 	</div>
 
 	<!-- Provide filters to user -->

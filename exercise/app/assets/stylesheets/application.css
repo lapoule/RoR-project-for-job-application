@@ -13,3 +13,140 @@
  *= require_tree .
  *= require_self
  */
+
+/* Setting up body to be able to see all page even with the footer */
+body
+{
+	margin-bottom: 50px;
+}
+
+/* Setting up default html tags */
+h1
+{
+	border-width: 3px;
+	border-style: dashed;
+	font-family: "Bookman Old Style", "Calibri";
+	text-align: center;
+}
+
+.centered-paragraph
+{
+	text-align: center;
+}
+
+/* Setting up the footer menu */
+footer
+{
+	background-color: #EEEEEE;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+}
+
+	footer div
+	{
+		display: inline;
+		float: left;
+		font-size: 22px;
+		text-align: center;
+		width: 20%;
+	}
+
+			footer div a:hover
+			{
+				background-color: #FF5555;
+			}
+
+/* Setting up tabulars */
+table
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+	table th
+	{
+		border-style: solid;
+		border-width: 1px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	
+	table td
+	{
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-left-style: solid;
+		border-left-width: 1px;
+		border-right-style: solid;
+		border-right-width: 1px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+/* Setting up forms */
+form
+{
+	text-align: center;
+}
+
+	form .error
+	{
+		color: red;
+	}
+
+	form .field_with_errors
+	{
+		display: inline;
+	}
+
+		form .field_with_errors input[type = text]
+		{
+			border-size: 2 px;
+			border-style: solid;
+			border-color: red;
+		}
+		
+		form .field_with_errors input[type = number]
+		{
+			border-size: 2 px;
+			border-style: solid;
+			border-color: red;
+		}	
+	
+	form input
+	{
+		border-style: solid;
+		border-width: 1px;
+		margin-left: 10px;
+	}
+
+		form input[type=submit]
+		{
+			margin-bottom: 2px;
+			margin-left: 2px;
+			margin-right: 2px;
+			margin-top: 2px;
+		}
+
+			.new_shop input[type=submit]
+			{
+				font-size: 25px;
+			}
+			
+			.edit_shop input[type=submit]
+			{
+				font-size: 25px;
+			}
+
+/* Setting up Google map on index page */
+#map_container
+{
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+	#map
+	{
+		min-height: 400px;
+	}
